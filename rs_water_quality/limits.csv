@@ -2,5 +2,5 @@ indicator,ambiente,op,value,unit,stat_checked,source
 od,,min,5.0,mg/L,min,CONAMA 357/2005 art. 15 (classe 2): OD >= 5 mg/L
 dbo,,max,5.0,mg/L,max,CONAMA 357/2005 art. 15 (classe 2): DBO 5 dias <= 5 mg/L
 turbidez,,max,100.0,NTU,max,CONAMA 357/2005 art. 15 (classe 2): turbidez <= 100 UNT
-fosforo_total,lotico,max,0.1,mg/L,max,CONAMA 357/2005 art. 15 (classe 2): fosforo total ambiente lotico <= 0.1 mg/L
+fosforo_total,lotico,max,0.1,mg/L,max,CONAMA 357/2005 art. 14 Tabela I (herdado pela classe 2, art. 15): fosforo total ambiente lotico <= 0.1 mg/L
 fosforo_total,lentico,max,0.030,mg/L,max,CONAMA 357/2005 art. 15 (classe 2): fosforo total ambiente lentico <= 0.030 mg/L
