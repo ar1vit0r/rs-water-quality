@@ -95,3 +95,52 @@ def test_station_report_fixed_date(conn):
     )
     md = build_station_report(conn, "S_DATE", years=(2020,), report_date=date(2026, 9, 23))
     assert "2026-09-23" in md
+
+
+@pytest.mark.db
+def test_station_report_data_source(conn):
+    _add(conn, "S_SRC", "lentico", "od", 2020, "min", 6.0)
+    _add(conn, "S_SRC", "lentico", "fosforo_total", 2020, "max", 0.02)
+    md = build_station_report(conn, "S_SRC", years=(2020,))
+    assert "## Data Source" in md
+    assert "ANA open data portal" in md
+    assert "RNQA" in md
+    assert "CONAMA 357/2005 art. 15 (classe 2): OD >= 5 mg/L" in md
+    # ambiente-specific limit source: lentico phosphorus, not lotico
+    assert "fosforo total ambiente lentico <= 0.030 mg/L" in md
+    assert "fosforo total ambiente lotico <= 0.1 mg/L" not in md
+
+
+@pytest.mark.db
+def test_station_report_glossary(conn):
+    conn.execute(
+        "INSERT INTO station (cd_estacao, uf, ambiente) VALUES ('S_GLOSS', 'RS', 'lotico')",
+    )
+    md = build_station_report(conn, "S_GLOSS", years=(2020,))
+    assert "## Indicators" in md
+    assert "**od** (Dissolved Oxygen)" in md
+    assert "**dbo** (Biochemical Oxygen Demand (BOD))" in md
+    assert "**ecoli** (E. coli)" in md
+    assert "**iqa** (Water Quality Index (IQA))" in md
+
+
+@pytest.mark.db
+def test_station_report_about_section(conn):
+    conn.execute(
+        "INSERT INTO station (cd_estacao, uf, ambiente) VALUES ('S_ABOUT', 'RS', 'lotico')",
+    )
+    md = build_station_report(conn, "S_ABOUT", years=(2020,))
+    assert "## About This Report" in md
+    assert "rs_water_quality" in md
+    assert "github.com/ar1vit0r/rs-water-quality" in md
+
+
+@pytest.mark.db
+def test_station_report_acronyms(conn):
+    conn.execute(
+        "INSERT INTO station (cd_estacao, uf, ambiente) VALUES ('S_ACRO', 'RS', 'lotico')",
+    )
+    md = build_station_report(conn, "S_ACRO", years=(2020,))
+    assert "## Acronyms" in md
+    for acronym in ("CONAMA", "ANA", "RNQA", "FEPAM", "NTU", "NMP/100 mL", "Ambiente (lotico/lentico)"):
+        assert f"**{acronym}**" in md
