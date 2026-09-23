@@ -7,6 +7,7 @@ from rs_water_quality.datasets import DATASETS
 from rs_water_quality.db import connect, init_schema, load_limits
 from rs_water_quality.download import download
 from rs_water_quality.load import load as do_load
+from rs_water_quality.report import build_report
 
 
 def cmd_init(args: argparse.Namespace) -> None:
@@ -38,12 +39,31 @@ def cmd_load(args: argparse.Namespace) -> None:
     conn.close()
 
 
+def cmd_report(args: argparse.Namespace) -> None:
+    conn = connect()
+    md = build_report(conn)
+    conn.close()
+    out = Path("reports/rs_2018_2020.md")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(md)
+    print(f"Report written to {out}")
+
+
+def cmd_all(args: argparse.Namespace) -> None:
+    cmd_init(args)
+    cmd_fetch(args)
+    cmd_load(args)
+    cmd_report(args)
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="rs_water_quality")
     sub = parser.add_subparsers(dest="command")
     sub.add_parser("init", help="Initialize schema and seed limits")
     sub.add_parser("fetch", help="Download all 6 ANA indicator CSVs")
     sub.add_parser("load", help="Load all 6 from data/raw/")
+    sub.add_parser("report", help="Write reports/rs_2018_2020.md")
+    sub.add_parser("all", help="init, fetch, load, report")
     args = parser.parse_args(argv)
     if args.command == "init":
         cmd_init(args)
@@ -51,6 +71,10 @@ def main(argv: list[str] | None = None) -> None:
         cmd_fetch(args)
     elif args.command == "load":
         cmd_load(args)
+    elif args.command == "report":
+        cmd_report(args)
+    elif args.command == "all":
+        cmd_all(args)
     else:
         parser.print_help()
         sys.exit(1)
