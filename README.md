@@ -13,7 +13,7 @@ Public screening of Rio Grande do Sul water-quality indicators against CONAMA 35
 | Turbidez | 185 | 21 | 11.4% |
 | Fosforo total | 169 | 152 | 89.9% |
 
-Phosphorus dominates the breach count because its limit is environment-specific: 0.03 mg/L for lentic waters (lakes, reservoirs), and 85% of RS stations are lentic.
+Phosphorus has the most breaches, and mostly in rivers: 137 of the 154 lotic stations screened in 2020 exceed the 0.1 mg/L river limit. All 15 lentic stations (lakes, reservoirs) exceed the stricter 0.030 mg/L limit.
 
 ## How it works
 
