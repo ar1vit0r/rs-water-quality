@@ -1,0 +1,15 @@
+# Local planning and review notes
+ROADMAP.md
+PLAN.md
+REVIEW.md
+CLAUDE.md
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Downloaded raw data
+data/raw/
