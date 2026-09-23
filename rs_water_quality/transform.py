@@ -31,9 +31,8 @@ _EMPTY_SENTINELS = {"", "Informação não disponível"}
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
-    text = path.read_text(encoding="utf-8-sig")
-    reader = csv.DictReader(text.splitlines())
-    return [{k.upper(): v for k, v in row.items()} for row in reader]
+    with path.open(encoding="utf-8-sig", newline="") as f:
+        return [{k.upper(): v for k, v in row.items()} for row in csv.DictReader(f)]
 
 
 def _parse_float(val: str) -> float | None:
