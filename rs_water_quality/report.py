@@ -36,20 +36,24 @@ def build_report(conn: psycopg.Connection, years: tuple[int, ...] = (2018, 2019,
 
     lines.append("")
 
-    # Top 15 breaches
-    lines.append("## Top 15 Breaches by Distance from Limit")
+    # Worst breaches ranked within each indicator: units differ, so there is no fair cross-indicator ranking
+    lines.append(f"## Worst 5 Breaches per Indicator ({min(years)}-{max(years)})")
     lines.append("")
-    lines.append("| Station | Indicator | Year | Value | Limit | Distance |")
-    lines.append("|---|---|---|---|---|---|")
+    lines.append("| Indicator | Station | Year | Value | Limit |")
+    lines.append("|---|---|---|---|---|")
 
     rows = conn.execute(
-        "SELECT cd_estacao, indicator, year, value, limit_value, "
-        "  ABS(value - limit_value) AS distance "
-        "FROM violation "
-        "ORDER BY distance DESC LIMIT 15"
+        "SELECT indicator, cd_estacao, year, value, limit_value FROM ("
+        "  SELECT *, row_number() OVER ("
+        "    PARTITION BY indicator "
+        "    ORDER BY CASE WHEN op = 'max' THEN value ELSE -value END DESC, year DESC, cd_estacao"
+        "  ) AS rank "
+        "  FROM violation WHERE year = ANY(%s)"
+        ") ranked WHERE rank <= 5 ORDER BY indicator, rank",
+        (list(years),),
     ).fetchall()
     for r in rows:
-        lines.append(f"| {r[0]} | {r[1]} | {r[2]} | {r[3]} | {r[4]} | {r[5]:.3f} |")
+        lines.append(f"| {r[0]} | {r[1]} | {r[2]} | {r[3]} | {r[4]} |")
 
     lines.append("")
 
