@@ -33,8 +33,11 @@ DATABASE_URL=postgresql://rsw:rsw@localhost:5433/rsw .venv/bin/python -m rs_wate
 DATABASE_URL=postgresql://rsw:rsw@localhost:5433/rsw .venv/bin/python -m rs_water_quality fetch
 DATABASE_URL=postgresql://rsw:rsw@localhost:5433/rsw .venv/bin/python -m rs_water_quality load
 DATABASE_URL=postgresql://rsw:rsw@localhost:5433/rsw .venv/bin/python -m rs_water_quality report
+DATABASE_URL=postgresql://rsw:rsw@localhost:5433/rsw .venv/bin/python -m rs_water_quality report-station <cd_estacao>  # requires pandoc for PDF
 # or: python -m rs_water_quality all
 ```
+
+`report-station` generates `reports/laudo_<cd_estacao>.md` and `.pdf`. The PDF step requires `pandoc` (an OS package, not a Python dependency).
 
 ## Limits used (CONAMA 357/2005, class 2 fresh water)
 
