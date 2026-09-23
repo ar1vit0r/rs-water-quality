@@ -56,6 +56,8 @@ E. coli and IQA are reported for reference only. CONAMA 357 sets thermotolerant 
 - Values are yearly aggregates (mean/min/max), not individual samples. This is a screening, not a legal compliance verdict.
 - The AMBIENTE mapping (1 = lotico, 2 = lentico) is inferred from water-body names, not from an official data dictionary.
 - Data ends in 2021 for most indicators, 2020 for E. coli. Some years have gaps.
+- Every station is screened against class 2 fresh water. The legal class (enquadramento) is set per river stretch (art. 2 XX), and salinity is not checked, so brackish stations (art. 2 II) may be held to fresh-water limits.
+- CONAMA 357 limits apply at the reference flow (art. 10); the data do not identify the flow at sampling. Parameters such as pH, chlorophyll a and ammonia are not covered because the ANA datasets used here do not include them.
 - No intermediate-environment phosphorus limit (0.050 mg/L) is used because no RS station is classified as intermediate.
 
 ## Data sources

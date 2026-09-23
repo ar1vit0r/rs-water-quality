@@ -115,7 +115,9 @@ def build_report(conn: psycopg.Connection, years: tuple[int, ...] = (2018, 2019,
     lines.append("- Values are yearly aggregates (mean/min/max), not individual samples. This is a screening, not a legal compliance verdict.")
     lines.append("- The AMBIENTE mapping (1 = lotico, 2 = lentico) is inferred from water-body names, not from an official data dictionary.")
     lines.append("- Data ends in 2021 for most indicators, 2020 for E. coli. Some years have gaps.")
-    lines.append("- E. coli and IQA are reported for reference only; no direct CONAMA 357 limit applies.")
+    lines.append("- E. coli and IQA are reported for reference only. CONAMA 357 art. 15 II limits thermotolerant coliforms (1000/100 mL in 80% of at least 6 samples per year) and lets the environmental agency set an E. coli limit instead; neither can be checked from yearly aggregates. IQA has no CONAMA limit.")
+    lines.append("- Every station is screened against class 2 fresh water. The legal class (enquadramento) is set per river stretch (art. 2 XX), and salinity is not checked, so brackish stations (art. 2 II) may be held to fresh-water limits.")
+    lines.append("- CONAMA 357 limits apply at the reference flow (art. 10); the data do not identify the flow at sampling. Intermediate environments (art. 15 IX-b) and parameters such as pH, chlorophyll a and ammonia are not covered.")
     lines.append("")
 
     return "\n".join(lines)
@@ -272,7 +274,9 @@ def build_station_report(
     lines.append("- Values are yearly aggregates (mean/min/max), not individual samples. This is a screening, not a legal compliance verdict.")
     lines.append("- The AMBIENTE mapping (1 = lotico, 2 = lentico) is inferred from water-body names, not from an official data dictionary.")
     lines.append("- Data ends in 2021 for most indicators, 2020 for E. coli. Some years have gaps.")
-    lines.append("- E. coli and IQA are reported for reference only; no direct CONAMA 357 limit applies.")
+    lines.append("- E. coli and IQA are reported for reference only. CONAMA 357 art. 15 II limits thermotolerant coliforms (1000/100 mL in 80% of at least 6 samples per year) and lets the environmental agency set an E. coli limit instead; neither can be checked from yearly aggregates. IQA has no CONAMA limit.")
+    lines.append("- Every station is screened against class 2 fresh water. The legal class (enquadramento) is set per river stretch (art. 2 XX), and salinity is not checked, so brackish stations (art. 2 II) may be held to fresh-water limits.")
+    lines.append("- CONAMA 357 limits apply at the reference flow (art. 10); the data do not identify the flow at sampling. Intermediate environments (art. 15 IX-b) and parameters such as pH, chlorophyll a and ammonia are not covered.")
     lines.append("- This is a single-station extract of the same screening, not an independent lab analysis.")
     lines.append("")
 
