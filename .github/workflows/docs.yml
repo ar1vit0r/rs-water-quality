@@ -24,5 +24,5 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --no-progress --max-retries 3 --timeout 60 --accept 200,429,502,503 --exclude localhost README.md docs
+          args: --no-progress --max-retries 3 --timeout 60 --accept 200,429,502,503 --exclude localhost --exclude dadosabertos.ana.gov.br/datasets/ README.md docs
           fail: true

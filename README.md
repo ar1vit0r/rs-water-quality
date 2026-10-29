@@ -71,6 +71,8 @@ E. coli and IQA are reported for reference only. CONAMA 357 sets thermotolerant 
   - [IQA](https://dadosabertos.ana.gov.br/datasets/7a278de90bd14330ab014c9b5db350e0_17.csv)
 - FEPAM operates all RS stations.
 
+The six CSV links above are kept as the original sources, but they no longer work. On 2026-10-29 each one redirected to an ArcGIS Hub endpoint that answers `400 Downloads are not supported for this item`. The ArcGIS Server services behind them on `snirh.gov.br` (`Indicadores_Qualidade_v31072023` and `v13052021`) return `404 Service not found`, and no successor was found on that server. As a result `fetch` fails, while `load` and `report` still run on CSVs you already have in the raw data folder.
+
 ## Stack
 
 Python 3.12, PostgreSQL 16 (Docker Compose), psycopg 3, pytest. Stdlib csv for parsing, no pandas.
