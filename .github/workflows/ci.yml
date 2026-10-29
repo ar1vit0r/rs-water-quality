@@ -29,6 +29,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
       - run: pytest -q --tb=short
         env:
           TEST_DATABASE_URL: postgresql://rsw:rsw@localhost:5432/rsw_test
