@@ -5,7 +5,9 @@ from pathlib import Path
 from rs_water_quality.datasets import Dataset
 
 
-def download(dataset: Dataset, dest_dir: Path, retries: int = 2, timeout: int = 120) -> tuple[Path, str]:
+def download(
+    dataset: Dataset, dest_dir: Path, retries: int = 2, timeout: int = 120
+) -> tuple[Path, str]:
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest = dest_dir / f"{dataset.indicator}.csv"
 

@@ -1,10 +1,9 @@
-import csv
 from pathlib import Path
 
 import psycopg
 
 from rs_water_quality.datasets import Dataset
-from rs_water_quality.transform import Measurement, Station, parse, read_rows
+from rs_water_quality.transform import parse, read_rows
 
 
 def load(conn: psycopg.Connection, dataset: Dataset, csv_path: Path, sha256: str) -> int:

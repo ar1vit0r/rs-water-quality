@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from rs_water_quality.transform import Measurement, Station, parse, read_rows
+from rs_water_quality.transform import parse, read_rows
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -19,7 +19,9 @@ def test_non_rs_excluded():
 def test_empty_cells_produce_no_measurement():
     rows = read_rows(FIXTURES / "od_sample.csv")
     stations, measurements = parse(rows, "od")
-    rs002_mean = [m for m in measurements if m.cd_estacao == "RS-002" and m.year == 2020 and m.stat == "mean"]
+    rs002_mean = [
+        m for m in measurements if m.cd_estacao == "RS-002" and m.year == 2020 and m.stat == "mean"
+    ]
     assert len(rs002_mean) == 0
 
 

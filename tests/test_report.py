@@ -18,7 +18,11 @@ def _add(conn, cd: str, ambiente: str, indicator: str, year: int, stat: str, val
 
 def _worst(report: str) -> list[list[str]]:
     section = report.split("## Worst 5")[1].split("\n## ")[0]
-    rows = [line for line in section.splitlines() if line.startswith("| ") and not line.startswith("| Indicator")]
+    rows = [
+        line
+        for line in section.splitlines()
+        if line.startswith("| ") and not line.startswith("| Indicator")
+    ]
     return [[cell.strip() for cell in row.strip("|").split("|")] for row in rows]
 
 
@@ -38,7 +42,10 @@ def test_worst_ranks_within_indicator_in_the_breach_direction(conn):
     _add(conn, "TB_MID", "lotico", "turbidez", 2019, "max", 120.0)
     rows = _worst(build_report(conn))
     assert [(r[0], r[1]) for r in rows] == [
-        ("od", "OD_BAD"), ("od", "OD_MID"), ("turbidez", "TB_BAD"), ("turbidez", "TB_MID"),
+        ("od", "OD_BAD"),
+        ("od", "OD_MID"),
+        ("turbidez", "TB_BAD"),
+        ("turbidez", "TB_MID"),
     ]
 
 
@@ -142,5 +149,13 @@ def test_station_report_acronyms(conn):
     )
     md = build_station_report(conn, "S_ACRO", years=(2020,))
     assert "## Acronyms" in md
-    for acronym in ("CONAMA", "ANA", "RNQA", "FEPAM", "NTU", "NMP/100 mL", "Ambiente (lotico/lentico)"):
+    for acronym in (
+        "CONAMA",
+        "ANA",
+        "RNQA",
+        "FEPAM",
+        "NTU",
+        "NMP/100 mL",
+        "Ambiente (lotico/lentico)",
+    ):
         assert f"**{acronym}**" in md

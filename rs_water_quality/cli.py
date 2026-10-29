@@ -84,7 +84,9 @@ def main(argv: list[str] | None = None) -> None:
     sub.add_parser("fetch", help="Download all 6 ANA indicator CSVs")
     sub.add_parser("load", help="Load all 6 from data/raw/")
     sub.add_parser("report", help="Write reports/rs_2018_2020.md")
-    report_station_p = sub.add_parser("report-station", help="Write a per-station laudo (Markdown + PDF)")
+    report_station_p = sub.add_parser(
+        "report-station", help="Write a per-station laudo (Markdown + PDF)"
+    )
     report_station_p.add_argument("cd_estacao", help="ANA station code")
     sub.add_parser("all", help="init, fetch, load, report")
     args = parser.parse_args(argv)

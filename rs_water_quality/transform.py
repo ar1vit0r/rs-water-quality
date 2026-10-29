@@ -48,7 +48,9 @@ def _normalize_ambiente(val: str) -> str | None:
     return _AMBIENTE_MAP.get(val.strip())
 
 
-def parse(rows: list[dict[str, str]], indicator: str, uf: str = "RS") -> tuple[list[Station], list[Measurement]]:
+def parse(
+    rows: list[dict[str, str]], indicator: str, uf: str = "RS"
+) -> tuple[list[Station], list[Measurement]]:
     station_map: dict[str, Station] = {}
     measurements: list[Measurement] = []
 
@@ -58,7 +60,7 @@ def parse(rows: list[dict[str, str]], indicator: str, uf: str = "RS") -> tuple[l
         for prefix, stat in _STAT_PREFIX.items():
             if col.startswith(prefix):
                 try:
-                    year = int(col[len(prefix):])
+                    year = int(col[len(prefix) :])
                     year_cols.append((col, stat, year))
                 except ValueError:
                     pass
@@ -85,12 +87,14 @@ def parse(rows: list[dict[str, str]], indicator: str, uf: str = "RS") -> tuple[l
             val = row.get(col_name, "")
             parsed = _parse_float(val)
             if parsed is not None:
-                measurements.append(Measurement(
-                    cd_estacao=cd,
-                    indicator=indicator,
-                    year=year,
-                    stat=stat,
-                    value=parsed,
-                ))
+                measurements.append(
+                    Measurement(
+                        cd_estacao=cd,
+                        indicator=indicator,
+                        year=year,
+                        stat=stat,
+                        value=parsed,
+                    )
+                )
 
     return list(station_map.values()), measurements

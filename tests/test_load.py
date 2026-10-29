@@ -3,7 +3,6 @@ from pathlib import Path
 import pytest
 
 from rs_water_quality.datasets import DATASETS
-from rs_water_quality.db import connect, init_schema, load_limits
 from rs_water_quality.load import load
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -15,8 +14,8 @@ def test_load_od_fixture_twice(conn):
     csv_path = FIXTURES / "od_sample.csv"
     sha256 = "abc123"
 
-    n1 = load(conn, ds, csv_path, sha256)
-    n2 = load(conn, ds, csv_path, sha256)
+    load(conn, ds, csv_path, sha256)
+    load(conn, ds, csv_path, sha256)
 
     cur = conn.execute("SELECT count(*) FROM measurement")
     count_after_1 = cur.fetchone()[0]

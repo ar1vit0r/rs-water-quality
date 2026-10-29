@@ -29,6 +29,14 @@ def load_limits(conn: psycopg.Connection, csv_path: Path = _LIMITS_CSV) -> int:
             conn.execute(
                 "INSERT INTO limits (indicator, ambiente, op, value, unit, stat_checked, source) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                (row["indicator"], ambiente, row["op"], float(row["value"]), row["unit"], row["stat_checked"], row["source"]),
+                (
+                    row["indicator"],
+                    ambiente,
+                    row["op"],
+                    float(row["value"]),
+                    row["unit"],
+                    row["stat_checked"],
+                    row["source"],
+                ),
             )
     return len(rows)
