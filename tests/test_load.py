@@ -15,10 +15,10 @@ def test_load_od_fixture_twice(conn):
     sha256 = "abc123"
 
     load(conn, ds, csv_path, sha256)
-    load(conn, ds, csv_path, sha256)
-
     cur = conn.execute("SELECT count(*) FROM measurement")
     count_after_1 = cur.fetchone()[0]
+
+    load(conn, ds, csv_path, sha256)
 
     # Second load should not change measurement count (upsert)
     cur2 = conn.execute("SELECT count(*) FROM measurement")
