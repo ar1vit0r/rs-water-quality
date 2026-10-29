@@ -13,3 +13,4 @@ __pycache__/
 
 # Downloaded raw data
 data/raw/
+AGENTS.md
