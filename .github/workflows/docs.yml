@@ -1,0 +1,28 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+    paths: ["**.md", ".markdownlint.json", ".github/workflows/docs.yml"]
+  pull_request:
+    branches: [main]
+    paths: ["**.md", ".markdownlint.json", ".github/workflows/docs.yml"]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            README.md
+            docs/**/*.md
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-retries 3 --timeout 60 --accept 200,429,502,503 --exclude localhost README.md docs
+          fail: true
